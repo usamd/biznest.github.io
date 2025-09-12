@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Site Under Maintenance — Contact & Suggestions</title>
+  <title>Biznest Site Under Maintenance — Contact & Suggestions</title>
   <style>
     /* --- Reset & basic layout --- */
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
-    body{display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(180deg,#f3f6fb,#ffffff)}
+    body{display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(180deg,#e6f4ec,#ffffff)}
 
     /* --- Card --- */
     .card{max-width:960px;width:100%;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(25,40,60,0.08);overflow:hidden;display:grid;grid-template-columns:1fr 420px}
 
     /* --- Left (notice) --- */
-    .notice{padding:36px;background:linear-gradient(180deg,#0b63ff 0%, #0b9bff 100%);color:white;display:flex;flex-direction:column;gap:18px}
+    .notice{padding:36px;background:linear-gradient(180deg,#064e3b 0%, #0d6e4f 100%);color:white;display:flex;flex-direction:column;gap:18px}
     .notice h1{margin:0;font-size:28px;line-height:1.05}
     .notice p{margin:0;opacity:0.95}
     .notice .meta{font-size:14px;opacity:0.9}
@@ -27,20 +27,21 @@
     input[type=text],input[type=email],textarea,select{
       width:100%;padding:12px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px;outline:none
     }
-    input:focus,textarea:focus{box-shadow:0 0 0 4px rgba(11,99,255,0.06);border-color:#0b63ff}
+    input:focus,textarea:focus{box-shadow:0 0 0 4px rgba(6,78,59,0.1);border-color:#064e3b}
     textarea{min-height:120px;resize:vertical}
 
     .row{display:flex;gap:12px}
     .row > *{flex:1}
 
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
-    .btn-primary{background:#0b63ff;color:white}
+    .btn-primary{background:#064e3b;color:white}
     .btn-muted{background:#f3f6fb;color:#0b2937;border:1px solid #e6e9ef}
 
     .hint{font-size:13px;color:#55607a}
     .small{font-size:12px;color:#6b7280}
 
     .success{padding:12px;border-radius:8px;background:#f0fdf4;color:#064e3b;border:1px solid #bbf7d0}
+    .error{padding:12px;border-radius:8px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
 
     footer{padding:14px 18px;background:#fbfdff;border-top:1px solid #f0f3f7;text-align:center;font-size:13px;color:#6b7280}
 
@@ -67,7 +68,6 @@
       <h2 style="margin:0 0 8px 0">Contact & Suggestions</h2>
       <p class="small" style="margin:0 0 14px 0">Have feedback or an idea? Leave it below — we read every message.</p>
 
-      <!-- NOTE: Replace the dummy action with your real backend endpoint -->
       <form id="contactForm">
         <div class="row">
           <div>
@@ -90,7 +90,6 @@
           <textarea id="message" name="message" placeholder="Tell us what happened or ask a question" required></textarea>
         </div>
 
-        <!-- Suggestions area placed explicitly below the main form as requested -->
         <div>
           <label for="suggestions">Suggestions (optional)</label>
           <textarea id="suggestions" name="suggestions" placeholder="If you have ideas or suggestions for improvements, leave them here"></textarea>
@@ -115,7 +114,6 @@
   </div>
 
   <script>
-    // Simple client-side handler: replace with real AJAX to your backend
     const form = document.getElementById('contactForm');
     const responseEl = document.getElementById('response');
     const clearBtn = document.getElementById('clearBtn');
@@ -125,17 +123,11 @@
       const data = new FormData(form);
       const obj = Object.fromEntries(data.entries());
 
-      // Basic validation
       if(!obj.name || !obj.email || !obj.message){
         showMessage('Please fill in the required fields (name, email, message).', 'error');
         return;
       }
 
-      // Simulate send: in production, POST to your API endpoint
-      // fetch('/api/contact', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)})
-      //   .then(...)
-
-      // Simulated success
       showMessage('Thanks — your message has been received. We will review your suggestions and respond if needed.', 'success');
       form.reset();
     });
