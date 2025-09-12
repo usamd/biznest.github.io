@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Discover and connect with businesses in Sri Lanka. Professional business listings platform." />
+  <title>BizNest - Professional Business Listings</title>
+
+  <!-- Font Awesome (kept as external icon source) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    /* ---------- Base / Reset ---------- */
+    :root{
+      --bg:#f7f9fb;
+      --card:#ffffff;
+      --accent:#0ea5a4; /* teal-ish */
+      --muted:#6b7280;
+      --radius:14px;
+      --max-width:1200px;
+      --glass: rgba(255,255,255,0.6);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    html,body { height:100%; background:linear-gradient(180deg,var(--bg),#ffffff); color:#111827; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- NAV ---------- */
+    .navbar { background: transparent; position: sticky; top:0; z-index: 40; padding:18px 0; }
+    .nav-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:700; font-size:1.1rem; }
+    .brand .logo { width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,var(--accent),#7dd3fc); display:flex; align-items:center; justify-content:center; color:white; font-weight:800; }
+    nav .nav-right { display:flex; align-items:center; gap:18px; }
+    .nav-links { display:flex; gap:14px; align-items:center; }
+    .btn { padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer; }
+    .btn-primary { background:var(--accent); color:white; box-shadow: 0 6px 18px rgba(14,165,164,0.12); }
+    .btn-ghost { background:transparent; color:var(--muted); border-radius:10px; }
+
+    /* ---------- HERO ---------- */
+    .hero { padding:48px 0 60px; }
+    .hero-grid { display:grid; grid-template-columns: 1fr 420px; gap:40px; align-items:center; }
+    .hero-title { font-size:2.2rem; line-height:1.05; margin-bottom:14px; }
+    .gradient-text { background:linear-gradient(90deg,#0ea5a4,#06b6d4); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero-sub { color:var(--muted); margin-bottom:20px; max-width:54ch; }
+
+    .search-card { background:var(--card); border-radius:12px; padding:18px; box-shadow: 0 8px 30px rgba(2,6,23,0.06); }
+    .search-row { display:flex; gap:8px; align-items:center; }
+    .search-row input, .search-row select { flex:1; padding:12px 14px; border-radius:10px; border:1px solid #e6eef2; font-size:0.95rem; outline:none; }
+    .search-row button { padding:11px 16px; border-radius:10px; border:none; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; }
+
+    /* hero right card */
+    .hero-card { background: linear-gradient(180deg, rgba(14,165,164,0.06), rgba(6,182,212,0.02)); border-radius:14px; padding:18px; }
+    .hero-card h4 { margin-bottom:8px; font-size:1rem; }
+    .hero-media { display:flex; gap:10px; margin-top:12px; }
+    .media-item { background:white; border-radius:10px; padding:10px; min-width:96px; text-align:center; box-shadow: 0 6px 18px rgba(2,6,23,0.04); }
+
+    /* ---------- FEATURES / SERVICES ---------- */
+    .section { padding:36px 0; }
+    .features-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+    .feature { background:var(--card); padding:18px; border-radius:12px; box-shadow: 0 8px 24px rgba(2,6,23,0.03); }
+    .feature i { font-size:20px; color:var(--accent); margin-bottom:10px; display:inline-block; }
+
+    /* ---------- STATISTICS ---------- */
+    .stats { display:flex; gap:14px; align-items:stretch; }
+    .stat { background:var(--card); padding:18px; border-radius:12px; text-align:center; flex:1; box-shadow: 0 8px 24px rgba(2,6,23,0.03); }
+    .stat h3 { font-size:1.6rem; color:var(--accent); margin-bottom:6px; }
+    .stat p { color:var(--muted); }
+
+    /* ---------- LISTINGS PREVIEW ---------- */
+    .listings { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+    .listing { background: linear-gradient(180deg,#fff,#fbfeff); border-radius:12px; padding:14px; display:flex; gap:12px; align-items:center; box-shadow: 0 8px 20px rgba(2,6,23,0.04); }
+    .listing .logo-thumb { width:72px; height:72px; border-radius:10px; background:#eef7f7; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); font-size:1.1rem; }
+    .listing .meta { flex:1; }
+    .listing .meta h4 { margin-bottom:6px; }
+    .listing .meta p { color:var(--muted); font-size:0.95rem; }
+
+    /* ---------- CTA ---------- */
+    .cta { background: linear-gradient(90deg, rgba(14,165,164,0.07), rgba(6,182,212,0.03)); border-radius:12px; padding:22px; display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:16px; }
+    .cta .text { font-weight:700; }
+    .cta .sub { color:var(--muted); font-weight:500; font-size:0.95rem; }
+
+    /* ---------- FOOTER ---------- */
+    footer { margin-top:36px; padding:28px 0; color:var(--muted); }
+    .footer-grid { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; flex-wrap:wrap; }
+    .footer-brand { display:flex; flex-direction:column; gap:8px; }
+    .footer-links { display:flex; gap:28px; flex-wrap:wrap; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 980px){
+      .hero-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: repeat(2,1fr); }
+      .listings { grid-template-columns: repeat(2,1fr); }
+      .nav-links { display:none; }
+    }
+    @media (max-width:640px){
+      .features-grid { grid-template-columns: 1fr; }
+      .listings { grid-template-columns: 1fr; }
+      .stat h3 { font-size:1.35rem; }
+      .brand { font-size:1rem; }
+      .hero-title { font-size:1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="#">
+        <div class="logo">B</div>
+        <div>
+          <div style="font-size:14px">BizNest</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:500">Business Directory • Sri Lanka</div>
+        </div>
+      </a>
+
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#services">Services</a>
+          <a href="#listings">Listings</a>
+          <a href="#about">About</a>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center">
+          <a class="btn btn-ghost" href="#login">Sign in</a>
+          <a class="btn btn-primary" href="#register">Get Listed</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1 class="hero-title">
+            <span class="gradient-text">Discover</span> &amp; <span class="gradient-text">Connect</span><br />
+            with Sri Lanka's Best Businesses
+          </h1>
+          <p class="hero-sub">
+            Find trusted businesses, explore services, and grow your network in Sri Lanka's premier business directory.
+          </p>
+
+          <div class="search-card" aria-hidden="false">
+            <form class="search-row" onsubmit="return false;">
+              <input type="text" placeholder="Search businesses, services or keywords (e.g., plumber, bakery)" />
+              <select aria-label="Category">
+                <option>All categories</option>
+                <option>Retail</option>
+                <option>IT &amp; Software</option>
+                <option>Food &amp; Beverage</option>
+                <option>Education</option>
+              </select>
+              <button type="submit">Search</button>
+            </form>
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:16px; align-items:center;">
+            <div style="display:flex; gap:8px; align-items:center;">
+              <div style="width:44px;height:44px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(2,6,23,0.04)">★</div>
+              <div>
+                <div style="font-weight:700">Trusted Profiles</div>
+                <div style="color:var(--muted);font-size:0.95rem">Verified businesses and reviews</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <div style="width:44px;height:44px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(2,6,23,0.04)">⚡</div>
+              <div>
+                <div style="font-weight:700">Fast Discovery</div>
+                <div style="color:var(--muted);font-size:0.95rem">Find relevant services quickly</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="hero-card">
+          <h4>Featured Services</h4>
+          <div class="hero-media">
+            <div class="media-item">
+              <div style="font-weight:700">Plumbing</div>
+              <div style="font-size:12px;color:var(--muted)">Top rated</div>
+            </div>
+            <div class="media-item">
+              <div style="font-weight:700">Cafés</div>
+              <div style="font-size:12px;color:var(--muted)">Near you</div>
+            </div>
+            <div class="media-item">
+              <div style="font-weight:700">IT Support</div>
+              <div style="font-size:12px;color:var(--muted)">24/7</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;">
+            <div style="font-weight:700;font-size:0.95rem">Why BizNest?</div>
+            <p style="color:var(--muted); margin-top:8px; font-size:0.95rem">
+              Connect with verified local businesses, compare services, and grow your business visibility.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVICES / FEATURES -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2 style="margin-bottom:12px">Services we provide</h2>
+        <p style="color:var(--muted); margin-bottom:18px; max-width:70ch">
+          BizNest helps businesses list services, get discovered, and connect with customers — from startups to established companies.
+        </p>
+
+        <div class="features-grid" aria-hidden="false">
+          <div class="feature">
+            <i class="fa-solid fa-store"></i>
+            <h3 style="margin:6px 0">Business Listings</h3>
+            <p style="color:var(--muted); font-size:0.95rem">Create a detailed business profile with images, contact info and opening hours.</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-magnifying-glass-location"></i>
+            <h3 style="margin:6px 0">Search & Discover</h3>
+            <p style="color:var(--muted); font-size:0.95rem">Advanced discovery so customers find you by service, location, or rating.</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-bullhorn"></i>
+            <h3 style="margin:6px 0">Promoted Ads</h3>
+            <p style="color:var(--muted); font-size:0.95rem">Promote your listing on the landing page for more visibility (optional paid feature).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="section" style="background:transparent;">
+      <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:220px;">
+            <h3 style="margin-bottom:6px">Our impact</h3>
+            <p style="color:var(--muted); max-width:55ch">Connecting businesses and customers across Sri Lanka — helping entrepreneurs grow from day one.</p>
+          </div>
+
+          <div style="flex:2; min-width:300px;">
+            <div class="stats">
+              <div class="stat">
+                <h3>1,200+</h3>
+                <p>Businesses listed</p>
+              </div>
+              <div class="stat">
+                <h3>45,000+</h3>
+                <p>Searches monthly</p>
+              </div>
+              <div class="stat">
+                <h3>4.8/5</h3>
+                <p>Average rating</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTINGS PREVIEW -->
+    <section id="listings" class="section">
+      <div class="container">
+        <h2 style="margin-bottom:12px">Recent Listings</h2>
+        <p style="color:var(--muted); margin-bottom:16px">A quick look at some businesses recently added to BizNest.</p>
+
+        <div class="listings">
+          <article class="listing">
+            <div class="logo-thumb">LB</div>
+            <div class="meta">
+              <h4>Lakeview Bakery</h4>
+              <p>Bakeries • Colombo • 4.7 (120)</p>
+            </div>
+            <div style="font-weight:700;color:var(--accent)">View</div>
+          </article>
+
+          <article class="listing">
+            <div class="logo-thumb">RR</div>
+            <div class="meta">
+              <h4>Ruwan Renovations</h4>
+              <p>Contractors • Galle • 4.6 (48)</p>
+            </div>
+            <div style="font-weight:700;color:var(--accent)">View</div>
+          </article>
+
+          <article class="listing">
+            <div class="logo-thumb">IT</div>
+            <div class="meta">
+              <h4>IslandTech Support</h4>
+              <p>IT Services • Kandy • 4.9 (86)</p>
+            </div>
+            <div style="font-weight:700;color:var(--accent)">View</div>
+          </article>
+        </div>
+
+        <div class="cta" style="margin-top:16px;">
+          <div>
+            <div class="text">Join BizNest — Get discovered by customers.</div>
+            <div class="sub">Add your business profile and appear in searches across Sri Lanka.</div>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="#register">Start your free listing</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" style="padding-bottom:48px;">
+      <div class="container">
+        <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+          <div style="flex:1; min-width:280px;">
+            <h2 style="margin-bottom:8px">About BizNest</h2>
+            <p style="color:var(--muted); max-width:60ch">
+              BizNest is a focused business directory designed to support entrepreneurs and customers across Sri Lanka. Our mission is to make it simple for people to find reputable local services and for businesses to reach the right audience.
+            </p>
+            <ul style="color:var(--muted); margin-top:12px;">
+              <li>Local & verified listings</li>
+              <li>Simple search and filtering</li>
+              <li>Optional promoted placement for growth</li>
+            </ul>
+          </div>
+
+          <div style="flex:1; min-width:240px;">
+            <h3 style="margin-bottom:8px">Mission</h3>
+            <p style="color:var(--muted)">To support everyone in their initial steps — people willing to start or grow a business by giving them discoverability and essential tools.</p>
+
+            <h3 style="margin-top:12px; margin-bottom:6px;">Vision</h3>
+            <p style="color:var(--muted)">A thriving local economy where every small business can be found and chosen by customers easily.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="logo" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;">B</div>
+          <div style="font-weight:700">BizNest</div>
+        </div>
+        <div style="color:var(--muted); font-size:0.95rem; margin-top:6px">Connecting businesses and customers across Sri Lanka.</div>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <div style="font-weight:700">Company</div>
+          <div style="color:var(--muted); margin-top:8px">About • Careers • Blog</div>
+        </div>
+
+        <div>
+          <div style="font-weight:700">Support</div>
+          <div style="color:var(--muted); margin-top:8px">Help center • Contact</div>
+        </div>
+
+        <div>
+          <div style="font-weight:700">Legal</div>
+          <div style="color:var(--muted); margin-top:8px">Privacy • Terms</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="border-top:1px solid #eef2f4; margin-top:18px; padding-top:14px; margin-bottom:6px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="color:var(--muted)">© <strong>BizNest</strong> — All rights reserved.</div>
+        <div style="color:var(--muted)">Follow us:
+          <span style="margin-left:8px;">
+            <a href="#" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" style="margin-left:8px" aria-label="twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" style="margin-left:8px" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
