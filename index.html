@@ -8,17 +8,40 @@
     /* --- Reset & basic layout --- */
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
-    body{display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(180deg,#e6f4ec,#ffffff)}
+    body{display:flex;align-items:center;justify-content:center;padding:16px;background:linear-gradient(180deg,#e6f4ec,#ffffff)}
 
     /* --- Card --- */
-    .card{max-width:960px;width:100%;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(25,40,60,0.08);overflow:hidden;display:grid;grid-template-columns:1fr 420px}
+    .card{
+      max-width:1200px;
+      width:100%;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(25,40,60,0.08);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr minmax(320px, 420px);
+    }
 
     /* --- Left (notice) --- */
-    .notice{padding:36px;background:linear-gradient(180deg,#064e3b 0%, #0d6e4f 100%);color:white;display:flex;flex-direction:column;gap:18px}
-    .notice h1{margin:0;font-size:28px;line-height:1.05}
-    .notice p{margin:0;opacity:0.95}
+    .notice{
+      padding:36px;
+      background:linear-gradient(180deg,#064e3b 0%, #0d6e4f 100%);
+      color:white;
+      display:flex;
+      flex-direction:column;
+      gap:18px
+    }
+    .notice h1{margin:0;font-size:2rem;line-height:1.2}
+    .notice p{margin:0;opacity:0.95;font-size:1rem;line-height:1.5}
     .notice .meta{font-size:14px;opacity:0.9}
-    .status-pill{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.12);border-radius:999px;font-weight:600;font-size:13px}
+    .status-pill{display:inline-block;padding:6px 12px;background:rgba(255,255,255,0.12);border-radius:999px;font-weight:600;font-size:13px}
+
+    .notice img{
+      max-width:100%;
+      height:auto;
+      margin:0 auto;
+      display:block;
+    }
 
     /* --- Right (form) --- */
     .form-wrap{padding:28px}
@@ -30,12 +53,13 @@
     input:focus,textarea:focus{box-shadow:0 0 0 4px rgba(6,78,59,0.1);border-color:#064e3b}
     textarea{min-height:120px;resize:vertical}
 
-    .row{display:flex;gap:12px}
-    .row > *{flex:1}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row > *{flex:1 1 150px}
 
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer;transition:0.2s}
     .btn-primary{background:#064e3b;color:white}
     .btn-muted{background:#f3f6fb;color:#0b2937;border:1px solid #e6e9ef}
+    .btn:hover{opacity:0.9}
 
     .hint{font-size:13px;color:#55607a}
     .small{font-size:12px;color:#6b7280}
@@ -46,10 +70,24 @@
     footer{padding:14px 18px;background:#fbfdff;border-top:1px solid #f0f3f7;text-align:center;font-size:13px;color:#6b7280}
 
     /* --- Responsive --- */
+    @media (max-width:1024px){
+      .notice h1{font-size:1.75rem}
+      .notice p{font-size:0.95rem}
+    }
+
     @media (max-width:880px){
       .card{grid-template-columns:1fr}
-      .notice{order:2}
-      .form-wrap{order:1}
+      .notice{order:2;padding:24px}
+      .form-wrap{order:1;padding:20px}
+    }
+
+    @media (max-width:480px){
+      body{padding:12px}
+      .card{border-radius:10px}
+      .notice h1{font-size:1.5rem}
+      .notice p{font-size:0.9rem}
+      .btn{padding:10px 12px;font-size:14px}
+      input,textarea{font-size:13px;padding:10px}
     }
   </style>
 </head>
@@ -61,10 +99,11 @@
       <h1>We're performing scheduled maintenance</h1>
       <p>Thanks for your patience — we're making improvements to serve you better. Our site is temporarily unavailable while we update features and enhance security.</p>
 	  
-	  <center><img src = "capture.png" height= "100px" width="280px" ></center>
+	  <img src="capture.png" alt="Maintenance image">
+
       <div class="meta">Expected back online: <strong>Dec - 2025</strong> — if you need urgent help, use the form to send suggestions or feedback.</div>
       <div style="margin-top:auto;font-size:13px;opacity:0.95">Prefer quick contact? Email <a href="mailto:udayangasameera20@gmail.com" style="color:white;text-decoration:underline">udayangasameera20@gmail.com</a></div>
-		<div><a href="landpage.html" style="color:white;text-decoration:underline">See Maintenance</a></div>
+      <div><a href="landpage.html" style="color:white;text-decoration:underline">See Maintenance</a></div>
     </div>
 
     <div class="form-wrap">
@@ -99,7 +138,7 @@
           <div class="hint">Suggestions go below the form — thank you for helping us improve.</div>
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:6px;align-items:center">
+        <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
           <button type="submit" class="btn btn-primary">Send Message</button>
           <button type="button" id="clearBtn" class="btn btn-muted">Clear</button>
         </div>
