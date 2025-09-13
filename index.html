@@ -2,113 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>Biznest Site Under Maintenance — Contact & Suggestions</title>
   <style>
     /* --- Reset & basic layout --- */
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
-    body{display:flex;align-items:center;justify-content:center;padding:16px;background:linear-gradient(180deg,#e6f4ec,#ffffff)}
+    html,body{height:100%;margin:0;font-family:'Avenir Next', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{display:flex;align-items:flex-start;justify-content:center;padding:24px;background:linear-gradient(180deg,#f8fafc,#ffffff);min-height:100vh;overflow-y:auto}
 
     /* --- Card --- */
     .card{
-      max-width:1200px;
+      max-width:1280px;
       width:100%;
-      background:#fff;
-      border-radius:14px;
-      box-shadow:0 10px 30px rgba(25,40,60,0.08);
-      overflow:hidden;
+      background:#ffffff;
+      border-radius:16px;
+      box-shadow:0 12px 40px rgba(15,23,42,0.1);
       display:grid;
-      grid-template-columns: 1fr minmax(320px, 420px);
+      grid-template-columns: 1fr minmax(360px, 460px);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      overflow:visible;
     }
+    .card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(15,23,42,0.12)}
 
     /* --- Left (notice) --- */
     .notice{
-      padding:36px;
-      background:linear-gradient(180deg,#064e3b 0%, #0d6e4f 100%);
+      padding:48px;
+      background:linear-gradient(135deg,#1a3c34 0%, #2e7d32 100%); /* Dark green gradient */
       color:white;
       display:flex;
       flex-direction:column;
-      gap:18px
+      gap:24px;
+      touch-action:manipulation;
+      overflow:visible;
     }
-    .notice h1{margin:0;font-size:2rem;line-height:1.2}
-    .notice p{margin:0;opacity:0.95;font-size:1rem;line-height:1.5}
-    .notice .meta{font-size:14px;opacity:0.9}
-    .status-pill{display:inline-block;padding:6px 12px;background:rgba(255,255,255,0.12);border-radius:999px;font-weight:600;font-size:13px}
-
+    .notice .logo{max-width:120px;height:auto;margin-bottom:16px}
+    .notice h1{margin:0;font-size:2.25rem;font-weight:600;line-height:1.2;letter-spacing:-0.02em}
+    .notice p{margin:0;font-size:1.1rem;line-height:1.6;opacity:0.9}
+    .notice .meta{font-size:0.95rem;opacity:0.85;font-weight:500}
+    .status-pill{
+      display:inline-flex;padding:8px 16px;background:rgba(255,255,255,0.15);border-radius:999px;font-weight:600;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;
+      transition:background 0.2s ease;
+    }
+    .status-pill:hover{background:rgba(255,255,255,0.2)}
     .notice img{
       max-width:100%;
+      max-height:200px;
       height:auto;
-      margin:0 auto;
+      margin:16px auto 0;
       display:block;
+      object-fit:contain;
+      opacity:0.95;
     }
 
     /* --- Right (form) --- */
-    .form-wrap{padding:28px}
-    form{display:flex;flex-direction:column;gap:12px}
-    label{font-size:13px;color:#1f2937}
-    input[type=text],input[type=email],textarea,select{
-      width:100%;padding:12px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px;outline:none
+    .form-wrap{
+      padding:40px;
+      background:#ffffff;
+      overflow:visible;
     }
-    input:focus,textarea:focus{box-shadow:0 0 0 4px rgba(6,78,59,0.1);border-color:#064e3b}
-    textarea{min-height:120px;resize:vertical}
+    form{display:flex;flex-direction:column;gap:16px}
+    label{font-size:0.9rem;color:#1e293b;font-weight:600;letter-spacing:0.02em}
+    input[type=text],input[type=email],textarea{
+      width:100%;padding:14px;border-radius:10px;border:1px solid #e2e8f0;font-size:0.95rem;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;
+      transition:border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    input:focus,textarea:focus{box-shadow:0 0 0 4px rgba(26,60,52,0.1);border-color:#1a3c34} /* Dark green focus */
+    textarea{min-height:140px;resize:vertical}
 
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    .row > *{flex:1 1 150px}
+    .row{display:flex;gap:16px;flex-wrap:wrap}
+    .row > *{flex:1 1 160px}
 
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer;transition:0.2s}
-    .btn-primary{background:#064e3b;color:white}
-    .btn-muted{background:#f3f6fb;color:#0b2937;border:1px solid #e6e9ef}
-    .btn:hover{opacity:0.9}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:12px;border:0;font-weight:600;font-size:0.95rem;cursor:pointer;min-height:48px;letter-spacing:0.02em;
+      transition:all 0.2s ease;-webkit-tap-highlight-color:transparent;
+    }
+    .btn-primary{background:#1a3c34;color:white} /* Dark green button */
+    .btn-muted{background:#f1f5f9;color:#1e293b;border:1px solid #e2e8f0}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    .btn:active{transform:scale(0.98)}
 
-    .hint{font-size:13px;color:#55607a}
-    .small{font-size:12px;color:#6b7280}
+    .hint{font-size:0.85rem;color:#64748b;letter-spacing:0.01em}
+    .small{font-size:0.8rem;color:#64748b;line-height:1.5}
 
-    .success{padding:12px;border-radius:8px;background:#f0fdf4;color:#064e3b;border:1px solid #bbf7d0}
-    .error{padding:12px;border-radius:8px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+    .success{padding:14px;border-radius:10px;background:#ecfdf5;color:#1a3c34;border:1px solid #a7f3d0;font-weight:500} /* Adjusted green success message */
+    .error{padding:14px;border-radius:10px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;font-weight:500}
 
-    footer{padding:14px 18px;background:#fbfdff;border-top:1px solid #f0f3f7;text-align:center;font-size:13px;color:#6b7280}
+    footer{padding:16px 24px;background:#f8fafc;border-top:1px solid #f1f5f9;text-align:center;font-size:0.85rem;color:#64748b;font-weight:500}
 
-    /* --- Responsive --- */
+    /* --- Enhanced Responsive Design --- */
+    @media (max-width:1200px){
+      .card{max-width:1080px}
+      .notice{padding:40px}
+      .form-wrap{padding:32px}
+    }
+
     @media (max-width:1024px){
-      .notice h1{font-size:1.75rem}
-      .notice p{font-size:0.95rem}
+      .card{max-width:900px}
+      .notice h1{font-size:2rem}
+      .notice p{font-size:1rem}
+      .form-wrap h2{font-size:1.5rem}
+      .row > *{flex:1 1 140px}
+      .notice img{max-height:180px}
     }
 
     @media (max-width:880px){
       .card{grid-template-columns:1fr}
-      .notice{order:2;padding:24px}
-      .form-wrap{order:1;padding:20px}
+      .notice{order:2;padding:32px}
+      .form-wrap{order:1;padding:24px}
+      .notice img{max-width:80%;max-height:160px}
+    }
+
+    @media (max-width:640px){
+      body{padding:16px;align-items:stretch}
+      .card{border-radius:12px}
+      .notice{padding:24px}
+      .notice h1{font-size:1.75rem}
+      .notice p{font-size:0.95rem}
+      .form-wrap{padding:20px}
+      .form-wrap h2{font-size:1.25rem}
+      input[type=text],input[type=email],textarea{padding:12px;font-size:0.9rem}
+      .btn{padding:12px 16px;font-size:0.9rem;min-height:44px}
+      .row{flex-direction:column;gap:12px}
+      .row > *{flex:1 1 100%}
+      .notice img{max-width:100%;max-height:140px}
     }
 
     @media (max-width:480px){
-      body{padding:12px}
       .card{border-radius:10px}
+      .notice{padding:20px}
       .notice h1{font-size:1.5rem}
       .notice p{font-size:0.9rem}
-      .btn{padding:10px 12px;font-size:14px}
-      input,textarea{font-size:13px;padding:10px}
+      .form-wrap{padding:16px}
+      .form-wrap h2{font-size:1.125rem}
+      input[type=text],input[type=email],textarea{padding:10px;font-size:0.85rem;border-radius:8px}
+      textarea{min-height:120px}
+      .btn{padding:10px 14px;font-size:0.85rem;min-height:40px}
+      .status-pill{font-size:0.8rem;padding:6px 12px}
+      .hint,.small{font-size:0.8rem}
+      footer{font-size:0.8rem;padding:12px}
+      .notice .logo{max-width:100px}
+      .notice img{max-height:120px}
     }
+
+    @media (max-width:360px){
+      body{padding:12px}
+      .card{border-radius:8px}
+      .notice{padding:16px}
+      .notice h1{font-size:1.375rem}
+      .notice p{font-size:0.85rem}
+      .form-wrap{padding:12px}
+      .btn{font-size:0.8rem;min-height:36px}
+      .notice img{max-height:100px}
+    }
+
+    /* --- High-density displays --- */
+    @media (-webkit-min-device-pixel-ratio:2), (min-resolution:192dpi){
+      .card{box-shadow:0 10px 32px rgba(15,23,42,0.12)}
+      input,textarea{border-width:0.5px}
+    }
+
+    /* --- Prevent zoom on input focus for mobile --- */
+    @media (max-width:640px){
+      input,textarea{font-size:16px}
+    }
+
+    /* --- Animation keyframes --- */
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .card{animation:fadeIn 0.5s ease-out}
   </style>
 </head>
 <body>
   <div class="card" role="region" aria-label="Maintenance notice and contact form">
-
     <div class="notice">
-      <div class="status-pill">UNDER MAINTENANCE</div>
-      <h1>We're performing scheduled maintenance</h1>
-      <p>Thanks for your patience — we're making improvements to serve you better. Our site is temporarily unavailable while we update features and enhance security.</p>
-	  
-	  <img src="capture.png" alt="Maintenance image">
+      <img class="logo" src="logo.png" alt="Biznest Logo">
+      <div class="status-pill">Under Maintenance</div>
+      <h1>We're Upgrading Our Systems</h1>
+      <p>We’re performing scheduled maintenance to enhance your experience. Our site is temporarily offline as we implement new features and strengthen security. Thank you for your understanding.</p>
+      
+      <img src="capture.png" alt="Maintenance illustration">
 
-      <div class="meta">Expected back online: <strong>Dec - 2025</strong> — if you need urgent help, use the form to send suggestions or feedback.</div>
-      <div style="margin-top:auto;font-size:13px;opacity:0.95">Prefer quick contact? Email <a href="mailto:udayangasameera20@gmail.com" style="color:white;text-decoration:underline">udayangasameera20@gmail.com</a></div>
-      <div><a href="landpage.html" style="color:white;text-decoration:underline">See Maintenance</a></div>
+      <div class="meta">Expected back online: <strong>December 2025</strong> — Use the form for urgent inquiries or suggestions.</div>
+      <div style="margin-top:auto;font-size:0.9rem;opacity:0.9">For immediate assistance, email <a href="mailto:udayangasameera20@gmail.com" style="color:white;text-decoration:underline">udayangasameera20@gmail.com</a></div>
+      <div><a href="landpage.html" style="color:white;text-decoration:underline;font-weight:500">Maintenance Details</a></div>
     </div>
 
     <div class="form-wrap">
-      <h2 style="margin:0 0 8px 0">Contact & Suggestions</h2>
-      <p class="small" style="margin:0 0 14px 0">Have feedback or an idea? Leave it below — we read every message.</p>
+      <h2 style="margin:0 0 12px 0;font-size:1.75rem;font-weight:600;color:#1e293b">Contact & Suggestions</h2>
+      <p class="small" style="margin:0 0 20px 0">Share your feedback or ideas — we value every message and respond promptly.</p>
 
       <form id="contactForm">
         <div class="row">
@@ -117,42 +200,41 @@
             <input id="name" name="name" type="text" placeholder="e.g., M.U.S. Dilshan" required />
           </div>
           <div>
-            <label for="email">Email</label>
+            <label for="email">Email Address</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" required />
           </div>
         </div>
 
         <div>
           <label for="subject">Subject</label>
-          <input id="subject" name="subject" type="text" placeholder="Short subject" />
+          <input id="subject" name="subject" type="text" placeholder="Brief subject" />
         </div>
 
         <div>
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell us what happened or ask a question" required></textarea>
+          <textarea id="message" name="message" placeholder="Describe your inquiry or feedback" required></textarea>
         </div>
 
         <div>
-          <label for="suggestions">Suggestions (optional)</label>
-          <textarea id="suggestions" name="suggestions" placeholder="If you have ideas or suggestions for improvements, leave them here"></textarea>
-          <div class="hint">Suggestions go below the form — thank you for helping us improve.</div>
+          <label for="suggestions">Suggestions (Optional)</label>
+          <textarea id="suggestions" name="suggestions" placeholder="Share ideas to improve our services"></textarea>
+          <div class="hint">Your suggestions help us enhance our platform — thank you!</div>
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
-          <button type="submit" class="btn btn-primary">Send Message</button>
-          <button type="button" id="clearBtn" class="btn btn-muted">Clear</button>
+        <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
+          <button type="submit" class="btn btn-primary">Submit Message</button>
+          <button type="button" id="clearBtn" class="btn btn-muted">Clear Form</button>
         </div>
 
-        <div id="response" style="margin-top:12px;display:none" aria-live="polite"></div>
+        <div id="response" style="margin-top:16px;display:none" aria-live="polite"></div>
 
-        <p class="small" style="margin-top:10px">We respect your privacy. Messages are used only to respond and improve the service.</p>
+        <p class="small" style="margin-top:12px">Your privacy is our priority. We use your information solely to respond and improve our services.</p>
       </form>
 
       <footer>
-        <div>We appreciate your patience during this maintenance window.</div>
+        <div>Thank you for your patience during our system upgrade.</div>
       </footer>
     </div>
-
   </div>
 
   <script>
@@ -166,22 +248,23 @@
       const obj = Object.fromEntries(data.entries());
 
       if(!obj.name || !obj.email || !obj.message){
-        showMessage('Please fill in the required fields (name, email, message).', 'error');
+        showMessage('Please complete all required fields (name, email, message).', 'error');
         return;
       }
 
-      showMessage('Thanks — your message has been received. We will review your suggestions and respond if needed.', 'success');
+      showMessage('Thank you — your message has been received. We’ll review your feedback and respond if necessary.', 'success');
       form.reset();
     });
 
-    clearBtn.addEventListener('click', ()=> form.reset());
+    clearBtn.addEventListener('click', () => form.reset());
 
     function showMessage(text, type){
       responseEl.style.display = 'block';
       responseEl.className = type === 'success' ? 'success' : 'error';
       responseEl.textContent = text;
+      responseEl.style.animation = 'fadeIn 0.3s ease-out';
       if(type === 'success'){
-        setTimeout(()=>{ responseEl.style.display='none' }, 9000);
+        setTimeout(() => { responseEl.style.display = 'none' }, 9000);
       }
     }
   </script>
