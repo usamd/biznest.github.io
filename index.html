@@ -193,7 +193,10 @@
       <h2 style="margin:0 0 12px 0;font-size:1.75rem;font-weight:600;color:#1e293b">Contact & Suggestions</h2>
       <p class="small" style="margin:0 0 20px 0">Share your feedback or ideas — we value every message and respond promptly.</p>
 
-      <form action ="https://formspree.io/f/mwpnjoqq" method ="post" id="contactForm">
+      <form action="https://formspree.io/f/mwpnjoqq" method="POST" id="contactForm">
+        <!-- Honeypot for spam protection -->
+        <input type="text" name="_gotcha" style="display:none !important" />
+
         <div class="row">
           <div>
             <label for="name">Your Name</label>
@@ -201,7 +204,7 @@
           </div>
           <div>
             <label for="email">Email Address</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            <input id="email" name="_replyto" type="email" placeholder="you@example.com" required />
           </div>
         </div>
 
@@ -241,30 +244,62 @@
     const form = document.getElementById('contactForm');
     const responseEl = document.getElementById('response');
     const clearBtn = document.getElementById('clearBtn');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault(); // Prevent default form submission
+
       const data = new FormData(form);
       const obj = Object.fromEntries(data.entries());
 
-      if(!obj.name || !obj.email || !obj.message){
+      // Validate required fields
+      if (!obj.name || !obj._replyto || !obj.message) {
         showMessage('Please complete all required fields (name, email, message).', 'error');
         return;
       }
 
-      showMessage('Thank you — your message has been received. We’ll review your feedback and respond if necessary.', 'success');
-      form.reset();
+      // Disable submit button to prevent double-submits
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        // Send data to Formspree
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Accept': 'application/json' // Better error handling
+          }
+        });
+
+        if (response.ok) {
+          showMessage('Thank you — your message has been received. We’ll review your feedback and respond if necessary.', 'success');
+          form.reset();
+        } else {
+          const errorData = await response.json();
+          showMessage(`Submission failed: ${errorData.error || 'Please try again later.'}`, 'error');
+        }
+      } catch (error) {
+        showMessage('Network error. Please check your connection and try again.', 'error');
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Message';
+      }
     });
 
-    clearBtn.addEventListener('click', () => form.reset());
+    clearBtn.addEventListener('click', () => {
+      form.reset();
+      responseEl.style.display = 'none'; // Clear any messages
+    });
 
-    function showMessage(text, type){
+    function showMessage(text, type) {
       responseEl.style.display = 'block';
       responseEl.className = type === 'success' ? 'success' : 'error';
       responseEl.textContent = text;
       responseEl.style.animation = 'fadeIn 0.3s ease-out';
-      if(type === 'success'){
-        setTimeout(() => { responseEl.style.display = 'none' }, 9000);
+      if (type === 'success') {
+        setTimeout(() => { responseEl.style.display = 'none'; }, 9000);
       }
     }
   </script>
