@@ -1,381 +1,1266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Discover and connect with businesses in Sri Lanka. Professional business listings platform." />
-  <title>BizNest - Professional Business Listings</title>
-
-  <!-- Font Awesome (kept as external icon source) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BizNest – Sri Lanka's Premier Business Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    /* ---------- Base / Reset ---------- */
-    :root{
-      --bg:#f7f9fb;
-      --card:#ffffff;
-      --accent:#0ea5a4; /* teal-ish */
-      --muted:#6b7280;
-      --radius:14px;
-      --max-width:1200px;
-      --glass: rgba(255,255,255,0.6);
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    :root {
+      --green-dark: #1e3a2f;
+      --green-mid: #2d5a3d;
+      --green-light: #4a7c59;
+      --green-accent: #5fa85a;
+      --green-pale: #e8f5e9;
+      --green-pastel: #f0f9f0;
+      --yellow: #f5c842;
+      --yellow-light: #fff8dc;
+      --text-dark: #1a1a1a;
+      --text-mid: #444;
+      --text-muted: #777;
+      --white: #ffffff;
+      --border: #e2e8e2;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 14px;
     }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    html,body { height:100%; background:linear-gradient(180deg,var(--bg),#ffffff); color:#111827; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-    a { color: inherit; text-decoration: none; }
 
-    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ---------- NAV ---------- */
-    .navbar { background: transparent; position: sticky; top:0; z-index: 40; padding:18px 0; }
-    .nav-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    .brand { display:flex; align-items:center; gap:12px; font-weight:700; font-size:1.1rem; }
-    .brand .logo { width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,var(--accent),#7dd3fc); display:flex; align-items:center; justify-content:center; color:white; font-weight:800; }
-    nav .nav-right { display:flex; align-items:center; gap:18px; }
-    .nav-links { display:flex; gap:14px; align-items:center; }
-    .btn { padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer; }
-    .btn-primary { background:var(--accent); color:white; box-shadow: 0 6px 18px rgba(14,165,164,0.12); }
-    .btn-ghost { background:transparent; color:var(--muted); border-radius:10px; }
-
-    /* ---------- HERO ---------- */
-    .hero { padding:48px 0 60px; }
-    .hero-grid { display:grid; grid-template-columns: 1fr 420px; gap:40px; align-items:center; }
-    .hero-title { font-size:2.2rem; line-height:1.05; margin-bottom:14px; }
-    .gradient-text { background:linear-gradient(90deg,#0ea5a4,#06b6d4); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .hero-sub { color:var(--muted); margin-bottom:20px; max-width:54ch; }
-
-    .search-card { background:var(--card); border-radius:12px; padding:18px; box-shadow: 0 8px 30px rgba(2,6,23,0.06); }
-    .search-row { display:flex; gap:8px; align-items:center; }
-    .search-row input, .search-row select { flex:1; padding:12px 14px; border-radius:10px; border:1px solid #e6eef2; font-size:0.95rem; outline:none; }
-    .search-row button { padding:11px 16px; border-radius:10px; border:none; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; }
-
-    /* hero right card */
-    .hero-card { background: linear-gradient(180deg, rgba(14,165,164,0.06), rgba(6,182,212,0.02)); border-radius:14px; padding:18px; }
-    .hero-card h4 { margin-bottom:8px; font-size:1rem; }
-    .hero-media { display:flex; gap:10px; margin-top:12px; }
-    .media-item { background:white; border-radius:10px; padding:10px; min-width:96px; text-align:center; box-shadow: 0 6px 18px rgba(2,6,23,0.04); }
-
-    /* ---------- FEATURES / SERVICES ---------- */
-    .section { padding:36px 0; }
-    .features-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
-    .feature { background:var(--card); padding:18px; border-radius:12px; box-shadow: 0 8px 24px rgba(2,6,23,0.03); }
-    .feature i { font-size:20px; color:var(--accent); margin-bottom:10px; display:inline-block; }
-
-    /* ---------- STATISTICS ---------- */
-    .stats { display:flex; gap:14px; align-items:stretch; }
-    .stat { background:var(--card); padding:18px; border-radius:12px; text-align:center; flex:1; box-shadow: 0 8px 24px rgba(2,6,23,0.03); }
-    .stat h3 { font-size:1.6rem; color:var(--accent); margin-bottom:6px; }
-    .stat p { color:var(--muted); }
-
-    /* ---------- LISTINGS PREVIEW ---------- */
-    .listings { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
-    .listing { background: linear-gradient(180deg,#fff,#fbfeff); border-radius:12px; padding:14px; display:flex; gap:12px; align-items:center; box-shadow: 0 8px 20px rgba(2,6,23,0.04); }
-    .listing .logo-thumb { width:72px; height:72px; border-radius:10px; background:#eef7f7; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); font-size:1.1rem; }
-    .listing .meta { flex:1; }
-    .listing .meta h4 { margin-bottom:6px; }
-    .listing .meta p { color:var(--muted); font-size:0.95rem; }
-
-    /* ---------- CTA ---------- */
-    .cta { background: linear-gradient(90deg, rgba(14,165,164,0.07), rgba(6,182,212,0.03)); border-radius:12px; padding:22px; display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:16px; }
-    .cta .text { font-weight:700; }
-    .cta .sub { color:var(--muted); font-weight:500; font-size:0.95rem; }
-
-    /* ---------- FOOTER ---------- */
-    footer { margin-top:36px; padding:28px 0; color:var(--muted); }
-    .footer-grid { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; flex-wrap:wrap; }
-    .footer-brand { display:flex; flex-direction:column; gap:8px; }
-    .footer-links { display:flex; gap:28px; flex-wrap:wrap; }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 980px){
-      .hero-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: repeat(2,1fr); }
-      .listings { grid-template-columns: repeat(2,1fr); }
-      .nav-links { display:none; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-dark);
+      background: #fff;
+      line-height: 1.6;
     }
-    @media (max-width:640px){
-      .features-grid { grid-template-columns: 1fr; }
-      .listings { grid-template-columns: 1fr; }
-      .stat h3 { font-size:1.35rem; }
-      .brand { font-size:1rem; }
-      .hero-title { font-size:1.6rem; }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--green-dark);
+    }
+
+    .nav-logo .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--green-dark);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--green-dark); }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-outline {
+      padding: 8px 20px;
+      border: 1.5px solid var(--green-dark);
+      border-radius: 8px;
+      color: var(--green-dark);
+      font-weight: 600;
+      font-size: 0.88rem;
+      background: transparent;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-outline:hover { background: var(--green-pale); }
+
+    .btn-solid {
+      padding: 8px 20px;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-solid:hover { background: var(--green-mid); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--green-dark);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      padding: 48px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 42%;
+      background: var(--green-mid);
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-content h1 span.yellow { color: var(--yellow); }
+    .hero-content h1 span.light { color: #a8d5b0; }
+
+    .hero-content p {
+      color: #b8d5c0;
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+      max-width: 380px;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 8px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 6px 6px 6px 14px;
+      align-items: center;
+      max-width: 480px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: transparent;
+    }
+
+    .search-bar input::placeholder { color: #aaa; }
+
+    .search-divider {
+      width: 1px;
+      height: 24px;
+      background: #ddd;
+      margin: 0 4px;
+    }
+
+    .select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-mid);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0 8px;
+    }
+
+    .select-wrap i { color: var(--green-accent); font-size: 0.85rem; }
+
+    .search-btn {
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .2s;
+    }
+
+    .search-btn:hover { background: var(--green-mid); }
+
+    .hero-illustration {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      z-index: 3;
+      width: 280px;
+    }
+
+    .hero-illustration svg { width: 100%; }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item {
+      padding: 32px 20px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background .2s;
+    }
+
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: var(--green-pastel); }
+
+    .stat-icon {
+      font-size: 1.6rem;
+      color: var(--green-accent);
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 72px 5%; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .section-header h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ── CATEGORIES ── */
+    .categories-section {
+      background: linear-gradient(180deg, var(--green-pastel) 0%, #fff 100%);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .category-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all .22s;
+      box-shadow: var(--shadow);
+    }
+
+    .category-card:hover {
+      border-color: var(--green-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px rgba(79,160,89,0.13);
+    }
+
+    .cat-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--green-pastel);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--green-accent);
+      flex-shrink: 0;
+    }
+
+    .cat-info h3 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 3px;
+    }
+
+    .cat-info span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── FEATURED BUSINESSES ── */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      max-width: 800px;
+      margin: 0 auto 32px;
+    }
+
+    .biz-card {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .22s, box-shadow .22s;
+      position: relative;
+    }
+
+    .biz-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+    }
+
+    .biz-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--yellow);
+      color: var(--text-dark);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .biz-badge.trending {
+      background: #ff6b35;
+      color: #fff;
+    }
+
+    .biz-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .biz-img-placeholder {
+      width: 100%;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      font-family: 'Sora', sans-serif;
+      letter-spacing: -1px;
+    }
+
+    .biz-img-placeholder.elite {
+      background: #1a1a1a;
+      color: #c8a96e;
+      font-style: italic;
+    }
+
+    .biz-img-placeholder.tech {
+      background: #e8f4ff;
+      color: #1a5fa8;
+      font-size: 1.4rem;
+    }
+
+    .biz-info {
+      padding: 16px;
+    }
+
+    .biz-category {
+      font-size: 0.75rem;
+      color: var(--green-accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 4px;
+    }
+
+    .biz-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .biz-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stars { color: #f5a623; font-size: 0.8rem; }
+
+    .biz-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .browse-btn-wrap {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .btn-browse {
+      display: inline-block;
+      padding: 11px 32px;
+      border: 2px solid var(--text-dark);
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-browse:hover {
+      background: var(--text-dark);
+      color: #fff;
+    }
+
+    /* ── ADS SECTION ── */
+    .ads-section {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 72px 5%;
+    }
+
+    .ads-section .section-header h2 { color: #fff; }
+    .ads-section .section-header p { color: #a8d5b0; }
+
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      max-width: 960px;
+      margin: 0 auto 48px;
+    }
+
+    .ad-card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .2s;
+    }
+
+    .ad-card:hover { transform: translateY(-4px); }
+
+    .ad-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ad-img.grand {
+      background: linear-gradient(135deg, #c8102e 0%, #8b0000 100%);
+      color: #fff;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .ad-img.spice {
+      background: linear-gradient(135deg, #1a3d1a 0%, #2d5a2d 100%);
+      color: #fff;
+    }
+
+    .ad-img.web {
+      background: linear-gradient(135deg, #0a1628 0%, #1a3a6e 100%);
+      color: #fff;
+    }
+
+    .ad-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .ad-badge.special { background: #ff6b35; color: #fff; }
+    .ad-badge.new { background: var(--yellow); color: #333; }
+    .ad-badge.premium { background: #7c3aed; color: #fff; }
+
+    .ad-img-text {
+      font-family: 'Sora', sans-serif;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+      z-index: 1;
+    }
+
+    .ad-img-text .big { font-size: 1.8rem; }
+    .ad-img-text .small { font-size: 0.85rem; letter-spacing: 2px; opacity: 0.85; }
+
+    .ad-body { padding: 16px; color: var(--text-dark); }
+
+    .ad-tag {
+      font-size: 0.72rem;
+      color: var(--green-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 4px;
+    }
+
+    .ad-title {
+      font-size: 0.97rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .ad-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .ad-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .ad-rating { display: flex; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
+
+    .btn-ad {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+
+    .btn-ad.green { background: var(--green-dark); color: #fff; }
+    .btn-ad.green:hover { background: var(--green-mid); }
+    .btn-ad.outline-green { background: transparent; border: 1.5px solid var(--green-accent); color: var(--green-accent); }
+    .btn-ad.outline-green:hover { background: var(--green-pale); }
+
+    .advertise-cta {
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 36px;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .advertise-cta h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .advertise-cta p {
+      color: #a8d5b0;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-advertise {
+      background: var(--green-accent);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-advertise:hover { background: #4a9a45; }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .dot.active { background: var(--green-accent); width: 22px; border-radius: 4px; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      transition: transform .2s;
+    }
+
+    .testimonial-card:hover { transform: translateY(-3px); }
+
+    .quote-mark {
+      font-size: 2.5rem;
+      color: var(--green-accent);
+      line-height: 1;
+      font-family: Georgia, serif;
+      margin-bottom: 10px;
+    }
+
+    .testimonial-text {
+      font-size: 0.87rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--green-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--green-accent);
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+    }
+
+    .author-role {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .testimonial-stars { color: #f5a623; font-size: 0.82rem; margin-top: 4px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 56px 5% 28px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo { 
+      font-family: 'Sora', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: #94c4a0;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-link {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #a8d5b0;
+      transition: background .2s;
+      cursor: pointer;
+    }
+
+    .social-link:hover { background: rgba(255,255,255,0.2); }
+
+    .footer-col h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #fff;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: #94c4a0;
+      transition: color .2s;
+    }
+
+    .footer-col ul li a:hover { color: #fff; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #94c4a0;
+      margin-bottom: 12px;
+    }
+
+    .contact-item i { color: var(--green-accent); margin-top: 2px; flex-shrink: 0; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #7aab86;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-bottom-links a {
+      color: #7aab86;
+      transition: color .2s;
+    }
+
+    .footer-bottom-links a:hover { color: #fff; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content { animation: fadeUp .6s ease both; }
+    .hero-illustration { animation: fadeUp .8s .2s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-grid { grid-template-columns: 1fr; }
+      .ads-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .hero-illustration { display: none; }
+      .hero-content h1 { font-size: 1.8rem; }
+    }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .categories-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="container nav-inner">
-      <a class="brand" href="#">
-        <div class="logo">B</div>
-        <div>
-          <div style="font-size:14px">BizNest</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:500">Business Directory • Sri Lanka</div>
-        </div>
-      </a>
 
-      <div class="nav-right">
-        <div class="nav-links">
-          <a href="#home">Home</a>
-          <a href="#services">Services</a>
-          <a href="#listings">Listings</a>
-          <a href="#about">About</a>
-        </div>
+<!-- ══ NAVBAR ══ -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">N</div>
+    BizNest
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Categories</a></li>
+    <li><a href="#">Trending</a></li>
+    <li><a href="#">About Us</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-outline">Sign in</button>
+    <button class="btn-solid">Sign Up</button>
+  </div>
+</nav>
 
-        <div style="display:flex; gap:10px; align-items:center">
-          <a class="btn btn-ghost" href="#login">Sign in</a>
-          <a class="btn btn-primary" href="#register">Get Listed</a>
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>
+      <span class="yellow">Discover</span> &amp; <span class="light">Connect</span><br>
+      with Sri Lanka's<br>
+      Best Businesses
+    </h1>
+    <p>Find trusted businesses, explore services, and grow your network in Sri Lanka's premier business directory.</p>
+    <div class="search-bar">
+      <i class="fas fa-search" style="color:#aaa; font-size:.9rem;"></i>
+      <input type="text" placeholder="Search businesses, services…"/>
+      <div class="search-divider"></div>
+      <div class="select-wrap">
+        <i class="fas fa-map-marker-alt"></i>
+        Select
+        <i class="fas fa-chevron-down" style="font-size:.7rem; color:#aaa;"></i>
+      </div>
+      <button class="search-btn">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero SVG Illustration -->
+  <div class="hero-illustration">
+    <svg viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Desk -->
+      <rect x="30" y="150" width="240" height="10" rx="4" fill="#4a7c59" opacity=".7"/>
+      <!-- Monitor -->
+      <rect x="90" y="60" width="130" height="90" rx="8" fill="#1e3a2f" stroke="#5fa85a" stroke-width="2"/>
+      <rect x="98" y="68" width="114" height="74" rx="4" fill="#0d2218"/>
+      <!-- Screen content lines -->
+      <rect x="104" y="74" width="60" height="5" rx="2" fill="#5fa85a" opacity=".6"/>
+      <rect x="104" y="84" width="90" height="3" rx="2" fill="#4a7c59" opacity=".5"/>
+      <rect x="104" y="92" width="75" height="3" rx="2" fill="#4a7c59" opacity=".5"/>
+      <rect x="104" y="100" width="50" height="3" rx="2" fill="#4a7c59" opacity=".5"/>
+      <!-- Bar chart on screen -->
+      <rect x="155" y="110" width="10" height="20" rx="2" fill="#5fa85a" opacity=".7"/>
+      <rect x="170" y="100" width="10" height="30" rx="2" fill="#f5c842" opacity=".8"/>
+      <rect x="185" y="108" width="10" height="22" rx="2" fill="#5fa85a" opacity=".7"/>
+      <!-- Monitor stand -->
+      <rect x="148" y="150" width="14" height="10" rx="2" fill="#4a7c59" opacity=".7"/>
+      <rect x="136" y="158" width="38" height="4" rx="2" fill="#4a7c59" opacity=".6"/>
+      <!-- Person left -->
+      <circle cx="68" cy="90" r="18" fill="#3d7a50"/>
+      <ellipse cx="68" cy="130" rx="22" ry="28" fill="#2d5a3d"/>
+      <!-- Person right -->
+      <circle cx="238" cy="85" r="18" fill="#6ab67a"/>
+      <ellipse cx="238" cy="125" rx="22" ry="28" fill="#5fa85a"/>
+      <!-- Arrow/pointer -->
+      <path d="M195 80 L215 70" stroke="#f5c842" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="215" cy="70" r="5" fill="#f5c842"/>
+      <!-- Plant -->
+      <rect x="40" y="135" width="10" height="20" rx="3" fill="#4a7c59" opacity=".8"/>
+      <ellipse cx="45" cy="128" rx="16" ry="18" fill="#5fa85a" opacity=".7"/>
+      <ellipse cx="38" cy="132" rx="10" ry="12" fill="#3d7a50" opacity=".8"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-icon"><i class="fas fa-building"></i></div>
+    <div class="stat-number">25,000+</div>
+    <div class="stat-label">Registered Businesses</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon"><i class="fas fa-users"></i></div>
+    <div class="stat-number">150,000+</div>
+    <div class="stat-label">Active Users</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
+    <div class="stat-number">20+</div>
+    <div class="stat-label">Districts Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon"><i class="fas fa-star"></i></div>
+    <div class="stat-number">50,000+</div>
+    <div class="stat-label">Reviews &amp; Ratings</div>
+  </div>
+</div>
+
+<!-- ══ POPULAR CATEGORIES ══ -->
+<section class="categories-section">
+  <div class="section-header">
+    <h2>Popular Business Categories</h2>
+    <p>Explore businesses by category</p>
+  </div>
+  <div class="categories-grid">
+    <div class="category-card">
+      <div class="cat-icon"><i class="fas fa-utensils"></i></div>
+      <div class="cat-info">
+        <h3>Restaurants &amp; Food</h3>
+        <span>2,500+ businesses</span>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="cat-icon"><i class="fas fa-shopping-bag"></i></div>
+      <div class="cat-info">
+        <h3>Retail &amp; Shopping</h3>
+        <span>3,200+ businesses</span>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="cat-icon"><i class="fas fa-heartbeat"></i></div>
+      <div class="cat-info">
+        <h3>Healthcare</h3>
+        <span>1,800+ businesses</span>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="cat-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="cat-info">
+        <h3>Education</h3>
+        <span>1,300+ businesses</span>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="cat-icon"><i class="fas fa-tools"></i></div>
+      <div class="cat-info">
+        <h3>Services</h3>
+        <span>4,100+ businesses</span>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="cat-icon"><i class="fas fa-car"></i></div>
+      <div class="cat-info">
+        <h3>Automotive</h3>
+        <span>900+ businesses</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURED BUSINESSES ══ -->
+<section>
+  <div class="section-header">
+    <h2>Featured Businesses</h2>
+    <p>Discover top-rated businesses in your area</p>
+  </div>
+  <div class="featured-grid">
+    <!-- Elite Restaurant -->
+    <div class="biz-card">
+      <span class="biz-badge">Premium</span>
+      <div class="biz-img-placeholder elite">
+        <span style="font-style:italic; font-size:2.2rem;">elite</span>
+      </div>
+      <div class="biz-info">
+        <div class="biz-category">Restaurant &amp; Food</div>
+        <div class="biz-name">Elite Restaurant</div>
+        <div class="biz-rating">
+          <span class="stars">★★★★★</span>
+          <span>4.8 (250 reviews)</span>
+        </div>
+        <div class="biz-location">
+          <i class="fas fa-map-marker-alt" style="color:var(--green-accent); font-size:.75rem;"></i>
+          Colombo, Sri Lanka
         </div>
       </div>
     </div>
-  </header>
-
-  <!-- HERO -->
-  <main>
-    <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div>
-          <h1 class="hero-title">
-            <span class="gradient-text">Discover</span> &amp; <span class="gradient-text">Connect</span><br />
-            with Sri Lanka's Best Businesses
-          </h1>
-          <p class="hero-sub">
-            Find trusted businesses, explore services, and grow your network in Sri Lanka's premier business directory.
-          </p>
-
-          <div class="search-card" aria-hidden="false">
-            <form class="search-row" onsubmit="return false;">
-              <input type="text" placeholder="Search businesses, services or keywords (e.g., plumber, bakery)" />
-              <select aria-label="Category">
-                <option>All categories</option>
-                <option>Retail</option>
-                <option>IT &amp; Software</option>
-                <option>Food &amp; Beverage</option>
-                <option>Education</option>
-              </select>
-              <button type="submit">Search</button>
-            </form>
-          </div>
-
-          <div style="display:flex; gap:12px; margin-top:16px; align-items:center;">
-            <div style="display:flex; gap:8px; align-items:center;">
-              <div style="width:44px;height:44px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(2,6,23,0.04)">★</div>
-              <div>
-                <div style="font-weight:700">Trusted Profiles</div>
-                <div style="color:var(--muted);font-size:0.95rem">Verified businesses and reviews</div>
-              </div>
-            </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <div style="width:44px;height:44px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(2,6,23,0.04)">⚡</div>
-              <div>
-                <div style="font-weight:700">Fast Discovery</div>
-                <div style="color:var(--muted);font-size:0.95rem">Find relevant services quickly</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <aside class="hero-card">
-          <h4>Featured Services</h4>
-          <div class="hero-media">
-            <div class="media-item">
-              <div style="font-weight:700">Plumbing</div>
-              <div style="font-size:12px;color:var(--muted)">Top rated</div>
-            </div>
-            <div class="media-item">
-              <div style="font-weight:700">Cafés</div>
-              <div style="font-size:12px;color:var(--muted)">Near you</div>
-            </div>
-            <div class="media-item">
-              <div style="font-weight:700">IT Support</div>
-              <div style="font-size:12px;color:var(--muted)">24/7</div>
-            </div>
-          </div>
-
-          <div style="margin-top:14px;">
-            <div style="font-weight:700;font-size:0.95rem">Why BizNest?</div>
-            <p style="color:var(--muted); margin-top:8px; font-size:0.95rem">
-              Connect with verified local businesses, compare services, and grow your business visibility.
-            </p>
-          </div>
-        </aside>
+    <!-- Tech Solutions Hub -->
+    <div class="biz-card">
+      <span class="biz-badge trending">Trending</span>
+      <div class="biz-img-placeholder tech" style="flex-direction:column; gap:4px;">
+        <span style="font-size:2.2rem;">⬡⬡⬡</span>
+        <span style="font-weight:800; font-size:1.1rem; color:#1a5fa8; letter-spacing:-0.5px;">TECH SOLUTION</span>
       </div>
-    </section>
-
-    <!-- SERVICES / FEATURES -->
-    <section id="services" class="section">
-      <div class="container">
-        <h2 style="margin-bottom:12px">Services we provide</h2>
-        <p style="color:var(--muted); margin-bottom:18px; max-width:70ch">
-          BizNest helps businesses list services, get discovered, and connect with customers — from startups to established companies.
-        </p>
-
-        <div class="features-grid" aria-hidden="false">
-          <div class="feature">
-            <i class="fa-solid fa-store"></i>
-            <h3 style="margin:6px 0">Business Listings</h3>
-            <p style="color:var(--muted); font-size:0.95rem">Create a detailed business profile with images, contact info and opening hours.</p>
-          </div>
-          <div class="feature">
-            <i class="fa-solid fa-magnifying-glass-location"></i>
-            <h3 style="margin:6px 0">Search & Discover</h3>
-            <p style="color:var(--muted); font-size:0.95rem">Advanced discovery so customers find you by service, location, or rating.</p>
-          </div>
-          <div class="feature">
-            <i class="fa-solid fa-bullhorn"></i>
-            <h3 style="margin:6px 0">Promoted Ads</h3>
-            <p style="color:var(--muted); font-size:0.95rem">Promote your listing on the landing page for more visibility (optional paid feature).</p>
-          </div>
+      <div class="biz-info">
+        <div class="biz-category">Technology Services</div>
+        <div class="biz-name">Tech Solutions Hub</div>
+        <div class="biz-rating">
+          <span class="stars">★★★★★</span>
+          <span>4.9 (180 reviews)</span>
         </div>
-      </div>
-    </section>
-
-    <!-- STATS -->
-    <section class="section" style="background:transparent;">
-      <div class="container">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
-          <div style="flex:1; min-width:220px;">
-            <h3 style="margin-bottom:6px">Our impact</h3>
-            <p style="color:var(--muted); max-width:55ch">Connecting businesses and customers across Sri Lanka — helping entrepreneurs grow from day one.</p>
-          </div>
-
-          <div style="flex:2; min-width:300px;">
-            <div class="stats">
-              <div class="stat">
-                <h3>1,200+</h3>
-                <p>Businesses listed</p>
-              </div>
-              <div class="stat">
-                <h3>45,000+</h3>
-                <p>Searches monthly</p>
-              </div>
-              <div class="stat">
-                <h3>4.8/5</h3>
-                <p>Average rating</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LISTINGS PREVIEW -->
-    <section id="listings" class="section">
-      <div class="container">
-        <h2 style="margin-bottom:12px">Recent Listings</h2>
-        <p style="color:var(--muted); margin-bottom:16px">A quick look at some businesses recently added to BizNest.</p>
-
-        <div class="listings">
-          <article class="listing">
-            <div class="logo-thumb">LB</div>
-            <div class="meta">
-              <h4>Lakeview Bakery</h4>
-              <p>Bakeries • Colombo • 4.7 (120)</p>
-            </div>
-            <div style="font-weight:700;color:var(--accent)">View</div>
-          </article>
-
-          <article class="listing">
-            <div class="logo-thumb">RR</div>
-            <div class="meta">
-              <h4>Ruwan Renovations</h4>
-              <p>Contractors • Galle • 4.6 (48)</p>
-            </div>
-            <div style="font-weight:700;color:var(--accent)">View</div>
-          </article>
-
-          <article class="listing">
-            <div class="logo-thumb">IT</div>
-            <div class="meta">
-              <h4>IslandTech Support</h4>
-              <p>IT Services • Kandy • 4.9 (86)</p>
-            </div>
-            <div style="font-weight:700;color:var(--accent)">View</div>
-          </article>
-        </div>
-
-        <div class="cta" style="margin-top:16px;">
-          <div>
-            <div class="text">Join BizNest — Get discovered by customers.</div>
-            <div class="sub">Add your business profile and appear in searches across Sri Lanka.</div>
-          </div>
-          <div>
-            <a class="btn btn-primary" href="#register">Start your free listing</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section" style="padding-bottom:48px;">
-      <div class="container">
-        <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
-          <div style="flex:1; min-width:280px;">
-            <h2 style="margin-bottom:8px">About BizNest</h2>
-            <p style="color:var(--muted); max-width:60ch">
-              BizNest is a focused business directory designed to support entrepreneurs and customers across Sri Lanka. Our mission is to make it simple for people to find reputable local services and for businesses to reach the right audience.
-            </p>
-            <ul style="color:var(--muted); margin-top:12px;">
-              <li>Local & verified listings</li>
-              <li>Simple search and filtering</li>
-              <li>Optional promoted placement for growth</li>
-            </ul>
-          </div>
-
-          <div style="flex:1; min-width:240px;">
-            <h3 style="margin-bottom:8px">Mission</h3>
-            <p style="color:var(--muted)">To support everyone in their initial steps — people willing to start or grow a business by giving them discoverability and essential tools.</p>
-
-            <h3 style="margin-top:12px; margin-bottom:6px;">Vision</h3>
-            <p style="color:var(--muted)">A thriving local economy where every small business can be found and chosen by customers easily.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div class="logo" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;">B</div>
-          <div style="font-weight:700">BizNest</div>
-        </div>
-        <div style="color:var(--muted); font-size:0.95rem; margin-top:6px">Connecting businesses and customers across Sri Lanka.</div>
-      </div>
-
-      <div class="footer-links">
-        <div>
-          <div style="font-weight:700">Company</div>
-          <div style="color:var(--muted); margin-top:8px">About • Careers • Blog</div>
-        </div>
-
-        <div>
-          <div style="font-weight:700">Support</div>
-          <div style="color:var(--muted); margin-top:8px">Help center • Contact</div>
-        </div>
-
-        <div>
-          <div style="font-weight:700">Legal</div>
-          <div style="color:var(--muted); margin-top:8px">Privacy • Terms</div>
+        <div class="biz-location">
+          <i class="fas fa-map-marker-alt" style="color:var(--green-accent); font-size:.75rem;"></i>
+          Kandy, Sri Lanka
         </div>
       </div>
     </div>
+  </div>
+  <div class="browse-btn-wrap">
+    <a href="#" class="btn-browse">Browse All Businesses</a>
+  </div>
+</section>
 
-    <div class="container" style="border-top:1px solid #eef2f4; margin-top:18px; padding-top:14px; margin-bottom:6px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div style="color:var(--muted)">© <strong>BizNest</strong> — All rights reserved.</div>
-        <div style="color:var(--muted)">Follow us:
-          <span style="margin-left:8px;">
-            <a href="#" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" style="margin-left:8px" aria-label="twitter"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#" style="margin-left:8px" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
-          </span>
+<!-- ══ FEATURED ADS ══ -->
+<section class="ads-section">
+  <div class="section-header">
+    <h2>Featured Business Advertisements</h2>
+    <p>Discover amazing offers from our registered businesses</p>
+  </div>
+  <div class="ads-grid">
+    <!-- Grand Opening -->
+    <div class="ad-card">
+      <div class="ad-img grand">
+        <span class="ad-badge special">Special Offer</span>
+        <div class="ad-img-text">
+          <div class="small">🎉 GRAND</div>
+          <div class="big">Opening</div>
+          <div class="small">SALE</div>
+        </div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-tag">Premium Business Store</div>
+        <div class="ad-title">Grand Opening Sale</div>
+        <div class="ad-desc">Get up to 50% off on all services. Limited time offer for grand opening celebration.</div>
+        <div class="ad-meta"><i class="fas fa-map-marker-alt" style="color:var(--green-accent)"></i> Colombo</div>
+        <div class="ad-meta"><i class="fas fa-clock" style="color:var(--text-muted)"></i> Expires in 5 days</div>
+        <button class="btn-ad green">View Offer</button>
+      </div>
+    </div>
+    <!-- Spice Garden -->
+    <div class="ad-card">
+      <div class="ad-img spice">
+        <span class="ad-badge new">New Menu</span>
+        <div class="ad-img-text" style="padding:10px; text-align:center;">
+          <div style="font-size:1.6rem; color:#f5c842; font-style:italic; font-weight:900;">Spice<br>Garden</div>
+          <div style="font-size:0.7rem; letter-spacing:1px; opacity:.75; margin-top:4px;">Indian Restaurant &amp; Takeaway</div>
+        </div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-tag">Spice Garden Restaurant</div>
+        <div class="ad-title">Authentic Sri Lankan Cuisine</div>
+        <div class="ad-desc">Experience traditional flavors with our new authentic Sri Lankan menu. Book your table now!</div>
+        <div class="ad-rating"><span class="stars">★★★★★</span>&nbsp;4.7 (99 reviews)</div>
+        <button class="btn-ad green">Book Table</button>
+      </div>
+    </div>
+    <!-- Web Dev -->
+    <div class="ad-card">
+      <div class="ad-img web">
+        <span class="ad-badge premium">Premium Service</span>
+        <div class="ad-img-text" style="padding:10px; text-align:center;">
+          <div style="font-size:0.7rem; letter-spacing:2px; color:#7ab8ff; margin-bottom:4px;">PREMIUM SERVICE</div>
+          <div style="font-size:1.6rem; color:#fff; font-weight:900; line-height:1.1;">Web<br><span style="color:#4a9eff;">Development</span></div>
+        </div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-tag">Digital Business Ltd</div>
+        <div class="ad-title">Professional Web Development</div>
+        <div class="ad-desc">Transform your business with our cutting-edge web development and digital marketing services.</div>
+        <div class="ad-meta"><i class="fas fa-map-marker-alt" style="color:var(--green-accent)"></i> Galle</div>
+        <div class="ad-meta"><i class="fas fa-tag" style="color:var(--text-muted)"></i> Starting from LKR 25,000</div>
+        <button class="btn-ad outline-green">Get Quote</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advertise CTA -->
+  <div class="advertise-cta">
+    <h3>Advertise with Us</h3>
+    <p>Promote your business to our growing community of users</p>
+    <button class="btn-advertise">Start Advertising</button>
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section style="background:#fafafa;">
+  <div class="section-header">
+    <h2>What Our Users Say</h2>
+    <p>Real experiences from our business community</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">BizNest has transformed how I discover local businesses. The platform is intuitive and the business ratings are comprehensive. I've found amazing restaurants and services through this platform.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">P</div>
+        <div>
+          <div class="author-name">Priya Sharma</div>
+          <div class="author-role">Marketing Professional</div>
+          <div class="testimonial-stars">★★★★★</div>
         </div>
       </div>
     </div>
-  </footer>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">As a business owner, listing my restaurant on BizNest was the best decision. I've seen a 41% increase in customers and the review system helps build trust with potential clients.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Rajesh Fernando</div>
+          <div class="author-role">Restaurant Owner</div>
+          <div class="testimonial-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">The search functionality is excellent and the business profiles are detailed. I can easily find contact information, reviews, and even special offers. Highly recommended!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Amara Silva</div>
+          <div class="author-role">Freelance Designer</div>
+          <div class="testimonial-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">BizNest</div>
+      <p>Sri Lanka's premier business directory connecting customers with trusted local businesses.</p>
+      <div class="social-links">
+        <div class="social-link"><i class="fab fa-facebook-f"></i></div>
+        <div class="social-link"><i class="fab fa-twitter"></i></div>
+        <div class="social-link"><i class="fab fa-instagram"></i></div>
+        <div class="social-link"><i class="fab fa-linkedin-in"></i></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>For Businesses</h4>
+      <ul>
+        <li><a href="#">List Your Business</a></li>
+        <li><a href="#">Advertise with Us</a></li>
+        <li><a href="#">Business Dashboard</a></li>
+        <li><a href="#">Pricing Plans</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>For Users</h4>
+      <ul>
+        <li><a href="#">Browse Businesses</a></li>
+        <li><a href="#">Write Reviews</a></li>
+        <li><a href="#">Mobile App</a></li>
+        <li><a href="#">Help Centre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Info</h4>
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>123 Business Street, Colombo 03, Sri Lanka</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <span>+94 11 234 5678</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <span>info@biznest.lk</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 BizNest. All rights reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
