@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BizNest – Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --green-dark:   #1e3a2f;
+      --green-mid:    #2d5a3d;
+      --green-card:   #244d36;
+      --green-light:  #4a7c59;
+      --green-accent: #5fa85a;
+      --green-btn:    #6bbf65;
+      --green-pale:   #e8f5e9;
+      --yellow:       #f5c842;
+      --white:        #ffffff;
+      --border-light: rgba(255,255,255,0.13);
+      --input-bg:     rgba(255,255,255,0.07);
+      --input-border: rgba(255,255,255,0.18);
+      --text-muted:   rgba(255,255,255,0.55);
+      --radius:       18px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      background: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Subtle grid pattern on bg ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* ── Back to Home ── */
+    .back-btn {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.85);
+      padding: 9px 18px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    /* ── Card wrapper ── */
+    .card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: min(860px, 94vw);
+      min-height: 540px;
+      background: var(--green-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+      animation: fadeUp .55s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── LEFT PANEL – Form ── */
+    .form-panel {
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border: 2.5px solid var(--green-accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--green-accent);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    /* Heading */
+    .form-panel h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .form-panel .subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 34px;
+    }
+
+    /* Fields */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .field label i {
+      font-size: 0.78rem;
+      color: var(--green-accent);
+    }
+
+    .field input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: rgba(255,255,255,0.9);
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+
+    .field input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .field input:focus {
+      border-color: var(--green-accent);
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Remember me */
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 24px;
+    }
+
+    .remember input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--green-accent);
+      cursor: pointer;
+    }
+
+    .remember label {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+    }
+
+    /* Sign In button */
+    .btn-signin {
+      width: 100%;
+      background: var(--green-btn);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.97rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s, transform .15s;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-signin:hover {
+      background: #5aad54;
+      transform: translateY(-1px);
+    }
+
+    .btn-signin:active { transform: translateY(0); }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.13);
+    }
+
+    .divider span {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Create account link */
+    .create-account {
+      text-align: center;
+    }
+
+    .create-account p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 6px;
+    }
+
+    .create-account a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--green-accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .create-account a:hover { color: var(--green-btn); }
+
+    /* ── RIGHT PANEL – Info ── */
+    .info-panel {
+      background: linear-gradient(160deg, #2d6044 0%, #1a4030 60%, #183828 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 20%, rgba(95,168,90,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Business photo */
+    .biz-photo {
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 4/3;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 1;
+      background: #2d5a3d;
+    }
+
+    /* SVG illustration of a business meeting */
+    .biz-photo svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .info-panel h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-panel p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      max-width: 280px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      .card { grid-template-columns: 1fr; }
+      .info-panel { display: none; }
+      .form-panel { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back to Home -->
+  <a href="index.html" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Back to Home
+  </a>
+
+  <!-- Card -->
+  <div class="card">
+
+    <!-- LEFT: Form -->
+    <div class="form-panel">
+
+      <!-- Logo -->
+      <div class="logo">
+        <div class="logo-icon">
+          <!-- N lettermark -->
+          <svg viewBox="0 0 20 20">
+            <polyline points="3,17 3,3 17,17 17,3"/>
+          </svg>
+        </div>
+        <span class="logo-text">BizNest</span>
+      </div>
+
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Sign in to access your business directory account and connect with Sri Lanka's premier business community.</p>
+
+      <!-- Email -->
+      <div class="field">
+        <label><i class="fas fa-envelope"></i> Email Address</label>
+        <input type="email" placeholder="Enter your email address"/>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label><i class="fas fa-lock"></i> Password</label>
+        <input type="password" placeholder="Enter your password"/>
+      </div>
+
+      <!-- Remember me -->
+      <div class="remember">
+        <input type="checkbox" id="remember"/>
+        <label for="remember">Remember Me</label>
+      </div>
+
+      <!-- Sign In -->
+      <button class="btn-signin">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+
+      <!-- Divider -->
+      <div class="divider"><span>or</span></div>
+
+      <!-- Create Account -->
+      <div class="create-account">
+        <p>Don't have an account?</p>
+        <a href="register.html">
+          <i class="fas fa-user-plus"></i> Create Account
+        </a>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Info panel -->
+    <div class="info-panel">
+
+      <!-- Business meeting illustration -->
+      <div class="biz-photo">
+        <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
+          <!-- Room background -->
+          <rect width="280" height="210" fill="#c8d8c0"/>
+          <!-- Window -->
+          <rect x="180" y="0" width="100" height="140" fill="#b8d4e8" opacity=".9"/>
+          <line x1="230" y1="0" x2="230" y2="140" stroke="#9ab8cc" stroke-width="2"/>
+          <line x1="180" y1="70" x2="280" y2="70" stroke="#9ab8cc" stroke-width="2"/>
+          <!-- Table -->
+          <ellipse cx="140" cy="155" rx="105" ry="28" fill="#8b6914" opacity=".75"/>
+          <rect x="35" y="148" width="210" height="12" rx="4" fill="#a07820"/>
+          <!-- Laptop on table -->
+          <rect x="100" y="126" width="54" height="34" rx="4" fill="#1a1a2e"/>
+          <rect x="104" y="130" width="46" height="26" rx="2" fill="#2a3f6f"/>
+          <rect x="88" y="158" width="78" height="5" rx="2" fill="#111"/>
+          <!-- Papers on table -->
+          <rect x="165" y="140" width="40" height="28" rx="3" fill="#fff" opacity=".85" transform="rotate(-8 165 140)"/>
+          <rect x="170" y="140" width="40" height="28" rx="3" fill="#fff" opacity=".7" transform="rotate(-3 170 140)"/>
+          <!-- Person 1 – left, standing -->
+          <circle cx="52" cy="80" r="18" fill="#e8b89a"/>
+          <rect x="34" y="98" width="36" height="55" rx="8" fill="#3a5fa8"/>
+          <rect x="34" y="110" width="36" height="8" fill="#2d4d8a"/>
+          <!-- Person 2 – center-left seated -->
+          <circle cx="108" cy="92" r="15" fill="#d4956a"/>
+          <rect x="93" y="107" width="30" height="46" rx="6" fill="#c0392b"/>
+          <!-- Person 3 – center seated -->
+          <circle cx="155" cy="88" r="16" fill="#e8b89a"/>
+          <rect x="140" y="104" width="30" height="50" rx="6" fill="#5a8a5a"/>
+          <!-- Person 4 – right seated -->
+          <circle cx="210" cy="84" r="17" fill="#4a3728"/>
+          <rect x="194" y="101" width="32" height="52" rx="6" fill="#7c4f2a"/>
+          <!-- Smiles / faces -->
+          <path d="M48 83 Q52 87 56 83" fill="none" stroke="#c8805a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M104 95 Q108 99 112 95" fill="none" stroke="#a06040" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M151 91 Q155 95 159 91" fill="none" stroke="#c8805a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M206 87 Q210 91 214 87" fill="none" stroke="#8b6040" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Eyes -->
+          <circle cx="49" cy="78" r="2" fill="#5a3020"/>
+          <circle cx="55" cy="78" r="2" fill="#5a3020"/>
+          <circle cx="105" cy="90" r="1.8" fill="#5a3020"/>
+          <circle cx="111" cy="90" r="1.8" fill="#5a3020"/>
+          <circle cx="152" cy="86" r="2" fill="#5a3020"/>
+          <circle cx="158" cy="86" r="2" fill="#5a3020"/>
+          <circle cx="207" cy="82" r="2" fill="#3a2010"/>
+          <circle cx="213" cy="82" r="2" fill="#3a2010"/>
+        </svg>
+      </div>
+
+      <h2>Sri Lanka's Premier Business Directory</h2>
+      <p>Connect with thousands of businesses and discover amazing opportunities in your local community. Join our growing network of entrepreneurs and business professionals.</p>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
