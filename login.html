@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BizNest – Sign In</title>
+  <title>Firmlink – Sign In</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -352,6 +352,12 @@
       position: relative;
       z-index: 1;
     }
+    .logo-icon .logo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+}
 
     /* ── Responsive ── */
     @media (max-width: 680px) {
@@ -374,17 +380,14 @@
     <!-- LEFT: Form -->
     <div class="form-panel">
 
-      <!-- Logo -->
-      <div class="logo">
-        <div class="logo-icon">
-          <!-- N lettermark -->
-          <svg viewBox="0 0 20 20">
-            <polyline points="3,17 3,3 17,17 17,3"/>
-          </svg>
-        </div>
-        <span class="logo-text">BizNest</span>
-      </div>
-
+ <!-- Logo -->
+<div class="logo">
+  <div class="logo-icon">
+    <img src="logo.png" alt="FirmLink logo" style="width:80px; height:80px; object-fit:contain;"/>
+  </div>
+  <span class="logo-text">Firmlink</span>
+</div>
+      
       <h1>Welcome Back</h1>
       <p class="subtitle">Sign in to access your business directory account and connect with Sri Lanka's premier business community.</p>
 
