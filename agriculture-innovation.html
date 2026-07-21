@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agriculture Innovation | FirmLink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --green-dark: #1e3a2f;
+      --green-mid: #2d5a3d;
+      --green-light: #4a7c59;
+      --green-accent: #5fa85a;
+      --green-pale: #e8f5e9;
+      --green-pastel: #f0f9f0;
+      --yellow: #f5c842;
+      --yellow-light: #fff8dc;
+      --orange: #ff6b35;
+      --blue: #1a5fa8;
+      --text-dark: #1a1a1a;
+      --text-mid: #444;
+      --text-muted: #777;
+      --white: #ffffff;
+      --border: #e2e8e2;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-dark); background: #fff; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR (shared with homepage) ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 64px; background: #fff; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--green-dark); }
+    .nav-logo img.logo-icon { width: 80px; height: 80px; object-fit: contain; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-mid); transition: color .2s; }
+    .nav-links a:hover { color: var(--green-dark); }
+    .nav-links a.active { color: var(--green-dark); font-weight: 700; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-outline { padding: 8px 20px; border: 1.5px solid var(--green-dark); border-radius: 8px; color: var(--green-dark); font-weight: 600; font-size: 0.88rem; background: transparent; cursor: pointer; transition: all .2s; }
+    .btn-outline:hover { background: var(--green-pale); }
+    .btn-solid { padding: 8px 20px; background: var(--green-dark); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: background .2s; }
+    .btn-solid:hover { background: var(--green-mid); }
+
+    /* ── PAGE HERO ── */
+    .hero {
+      background: var(--green-dark); padding: 56px 5% 48px; position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 42%;
+      background: var(--green-mid); clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 640px; }
+    .breadcrumb { font-size: 0.82rem; color: #a8d5b0; margin-bottom: 14px; }
+    .breadcrumb a { color: #a8d5b0; }
+    .breadcrumb a:hover { color: #fff; }
+    .hero h1 { font-family: 'Sora', sans-serif; font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 14px; }
+    .hero h1 span.yellow { color: var(--yellow); }
+    .hero p.sub { color: #b8d5c0; font-size: 0.98rem; max-width: 520px; }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 5%; }
+
+    section.content { padding: 56px 0; }
+    section.content:first-of-type { padding-top: 48px; }
+
+    .section-header { margin-bottom: 28px; max-width: 720px; }
+    .section-header h2 { font-family: 'Sora', sans-serif; font-size: 1.55rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+    .section-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .card {
+      background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 26px 28px; box-shadow: var(--shadow); margin-bottom: 22px;
+    }
+    .card p { font-size: 0.95rem; color: var(--text-mid); margin-bottom: 12px; }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* ── ZONE CARDS (styled like category-card) ── */
+    .zone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    @media (max-width: 900px) { .zone-grid, .season-grid { grid-template-columns: 1fr; } }
+    .zone {
+      background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 22px; box-shadow: var(--shadow); transition: all .22s;
+    }
+    .zone:hover { border-color: var(--green-accent); transform: translateY(-3px); box-shadow: 0 10px 32px rgba(79,160,89,0.13); }
+    .zone .z-icon {
+      width: 46px; height: 46px; background: var(--green-pastel); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+      color: var(--green-accent); margin-bottom: 12px;
+    }
+    .zone .z-title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text-dark); margin-bottom: 3px; }
+    .zone .z-rain { font-size: 0.78rem; color: var(--green-accent); font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .3px; }
+    .zone ul { padding-left: 16px; font-size: 0.85rem; color: var(--text-muted); }
+    .zone ul li { margin-bottom: 5px; }
+
+    /* ── SEASON CARDS (styled like ad-card, on dark) ── */
+    .season-section { background: var(--green-dark); color: #fff; padding: 56px 0; }
+    .season-section .section-header h2 { color: #fff; }
+    .season-section .section-header p { color: #a8d5b0; }
+    .season-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .season { background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.14); border-radius: var(--radius); padding: 24px; }
+    .season.yala { border-top: 3px solid var(--orange); }
+    .season.maha { border-top: 3px solid var(--green-accent); }
+    .season .s-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+    .season.maha .s-badge { background: var(--green-accent); color: #fff; }
+    .season.yala .s-badge { background: var(--orange); color: #fff; }
+    .season .s-name { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 2px; }
+    .season .s-when { font-size: 0.78rem; color: #a8d5b0; margin-bottom: 14px; letter-spacing: .3px; }
+    .season ul { padding-left: 18px; font-size: 0.87rem; color: #d6e8da; }
+    .season li { margin-bottom: 8px; }
+
+    /* ── CROP TABLE ── */
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { text-align: left; padding: 12px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); font-weight: 700; background: var(--green-pastel); }
+    tr:last-child td { border-bottom: none; }
+    .tag { display: inline-block; font-size: 0.7rem; padding: 3px 9px; border-radius: 20px; font-weight: 700; margin: 1px 3px 1px 0; }
+    .tag.green { background: var(--green-pale); color: var(--green-mid); }
+    .tag.orange { background: #ffe4d8; color: #b5461c; }
+
+    ul.clean { padding-left: 18px; }
+    ul.clean li { margin-bottom: 10px; font-size: 0.93rem; color: var(--text-mid); }
+    ul.clean li::marker { color: var(--green-accent); }
+    ul.clean li strong { color: var(--text-dark); }
+
+    /* ── CTA (styled like advertise-cta) ── */
+    .cta-section { background: var(--green-dark); padding: 56px 5% 64px; }
+    .advertise-cta {
+      background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 16px; padding: 40px; text-align: center; max-width: 600px; margin: 0 auto;
+      color: #fff;
+    }
+    .advertise-cta h3 { font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
+    .advertise-cta p { color: #a8d5b0; font-size: 0.92rem; margin-bottom: 24px; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .btn-advertise {
+      background: var(--green-accent); color: #fff; border: none; padding: 13px 34px; border-radius: 8px;
+      font-weight: 700; font-size: 0.94rem; font-family: inherit; cursor: pointer; transition: background .2s;
+      display: inline-block;
+    }
+    .btn-advertise:hover { background: #4a9a45; }
+
+    /* ── FOOTER (shared with homepage) ── */
+    footer { background: var(--green-dark); color: #fff; padding: 56px 5% 28px; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand .logo { display: flex; align-items: center; gap: 10px; font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; }
+    .footer-brand .logo img { width: 65px; height: 65px; object-fit: contain; }
+    .footer-brand p { font-size: 0.85rem; color: #94c4a0; line-height: 1.7; margin-bottom: 20px; }
+    .footer-brand .parent-company { font-size: 0.78rem; color: #6ea87c; margin-bottom: 20px; letter-spacing: .3px; }
+    .social-links { display: flex; gap: 10px; }
+    .social-link { width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #a8d5b0; transition: background .2s; cursor: pointer; }
+    .social-link:hover { background: rgba(255,255,255,0.2); }
+    .footer-col h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 18px; color: #fff; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.85rem; color: #94c4a0; transition: color .2s; }
+    .footer-col ul li a:hover { color: #fff; }
+    .contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #94c4a0; margin-bottom: 12px; }
+    .contact-item i { color: var(--green-accent); margin-top: 2px; flex-shrink: 0; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #7aab86; }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { color: #7aab86; transition: color .2s; }
+    .footer-bottom-links a:hover { color: #fff; }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav>
+  <a href="index.html" style="display:flex; align-items:center; gap:8px; text-decoration:none;">
+    <div class="nav-logo">
+      <img src="logo.png" alt="FirmLink logo" class="logo-icon"/>
+      Firmlink
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#">Categories</a></li>
+    <li><a href="#">Trending</a></li>
+    <li><a href="agriculture-innovation.html" class="active">Agriculture</a></li>
+    <li><a href="#">About Us</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="login.html"><button class="btn-outline">Sign in</button></a>
+    <button class="btn-solid">Sign Up</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Agriculture Innovation</div>
+    <h1>Growing with the seasons: <span class="yellow">a field guide</span> to farming in Sri Lanka</h1>
+    <p class="sub">What grows where, when to plant it, and how Sri Lanka's two monsoon seasons shape almost every cultivation decision on the island.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section class="content">
+    <div class="card">
+      <p>Sri Lanka's agriculture is built around water — specifically, around two monsoons that arrive from opposite directions at opposite times of year. Nearly every cropping decision a farmer makes, from which paddy variety to sow to when to plant vegetables in the hill country, traces back to these two rainfall patterns. Understanding them is the single most useful piece of agricultural knowledge for anyone growing, buying from, or trading with Sri Lankan farms.</p>
+      <p>This page is a starting point: an overview of the island's growing zones, its two cultivation seasons, and the crops best suited to each. For the detailed week-by-week paddy schedule — including fertilizer timing, pest windows, and variety selection — use the <strong>Crop Calendar tool</strong> linked at the bottom of this page.</p>
+    </div>
+  </section>
+
+  <section class="content" style="padding-top:0;">
+    <div class="section-header">
+      <h2>The three agro-climatic zones</h2>
+      <p>Sri Lanka is divided into three broad zones based on annual rainfall, and the same crop can behave very differently depending on which zone it's grown in.</p>
+    </div>
+    <div class="zone-grid">
+      <div class="zone">
+        <div class="z-icon"><i class="fas fa-cloud-rain"></i></div>
+        <div class="z-title">Wet Zone</div>
+        <div class="z-rain">&gt; 2,500 mm / year</div>
+        <ul>
+          <li>Southwest quarter of the island</li>
+          <li>Rain fairly well spread across the year</li>
+          <li>Home to tea, rubber, and most home-garden vegetables</li>
+          <li>Paddy grown mainly rainfed / semi-irrigated</li>
+        </ul>
+      </div>
+      <div class="zone">
+        <div class="z-icon"><i class="fas fa-cloud-sun"></i></div>
+        <div class="z-title">Intermediate Zone</div>
+        <div class="z-rain">1,750–2,500 mm / year</div>
+        <ul>
+          <li>Transition belt between wet and dry zones</li>
+          <li>Mixed cropping: paddy, coconut, and field crops</li>
+          <li>More dependent on the Maha monsoon than the wet zone</li>
+        </ul>
+      </div>
+      <div class="zone">
+        <div class="z-icon"><i class="fas fa-sun"></i></div>
+        <div class="z-title">Dry Zone</div>
+        <div class="z-rain">&lt; 1,750 mm / year</div>
+        <ul>
+          <li>Covers most of the north, east, and southeast</li>
+          <li>Almost all rain falls during the Maha season</li>
+          <li>Relies heavily on ancient tank irrigation systems</li>
+          <li>Sri Lanka's main paddy bowl, plus chilli and onion</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="section-header">
+      <h2>What to grow, and when</h2>
+      <p>A practical cross-reference of common Sri Lankan crops against the season and zone they perform best in.</p>
+    </div>
+    <div class="card" style="padding:8px 12px;">
+      <table>
+        <tr><th>Crop group</th><th>Examples</th><th>Best season</th><th>Notes</th></tr>
+        <tr>
+          <td><strong>Paddy</strong></td>
+          <td>Nadu &amp; Samba varieties, short (2½–3 mo) to long (4–4½ mo) duration</td>
+          <td><span class="tag green">Maha</span><span class="tag orange">Yala</span></td>
+          <td>Variety duration is chosen to fit the season length — shorter-duration varieties suit Yala's tighter water window.</td>
+        </tr>
+        <tr>
+          <td><strong>Other field crops</strong></td>
+          <td>Maize, green gram, cowpea, black gram, soya bean, groundnut, kurakkan</td>
+          <td><span class="tag green">Maha</span></td>
+          <td>Grown mainly in rotation with paddy in the dry-zone Maha season; need less water than rice.</td>
+        </tr>
+        <tr>
+          <td><strong>Upcountry vegetables</strong></td>
+          <td>Carrot, cabbage, leeks, beans, potato</td>
+          <td><span class="tag orange">Yala</span></td>
+          <td>The cooler April–August period suits temperate vegetables in Nuwara Eliya and the central highlands.</td>
+        </tr>
+        <tr>
+          <td><strong>Lowland vegetables</strong></td>
+          <td>Tomato, brinjal, okra, chilli, pumpkin</td>
+          <td>Year-round, zone-dependent</td>
+          <td>Grown throughout the year in the wet and intermediate zones with irrigation; chilli and onion are major dry-zone Yala crops.</td>
+        </tr>
+        <tr>
+          <td><strong>Plantation crops</strong></td>
+          <td>Tea, rubber, cinnamon</td>
+          <td>Not seasonal</td>
+          <td>Perennial crops confined mostly to the wet zone; harvested year-round rather than by season.</td>
+        </tr>
+        <tr>
+          <td><strong>Coconut</strong></td>
+          <td>—</td>
+          <td>Not seasonal</td>
+          <td>Perennial, grown along the coastal belt and intermediate zone; planting timed to the start of the rains.</td>
+        </tr>
+        <tr>
+          <td><strong>Fruits</strong></td>
+          <td>Banana, papaya, pineapple, mango</td>
+          <td>Mostly not seasonal</td>
+          <td>New plantings are usually timed to the start of Maha rains to establish before dry spells.</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="section-header">
+      <h2>Why this matters for farm planning</h2>
+    </div>
+    <div class="card">
+      <ul class="clean">
+        <li><strong>Land preparation timing is everything.</strong> Starting even a few weeks late against the monsoon can mean the crop matures into a dry spell, or misses the harvest window before the next rains.</li>
+        <li><strong>Variety duration should match season length,</strong> not just yield potential — a long-duration, high-yield paddy variety sown too late in Yala can run out of water before harvest.</li>
+        <li><strong>Zone changes the season's meaning.</strong> "Maha" brings heavy, reliable rain to the dry zone but is a secondary season in the wet zone, where rainfall is spread more evenly year-round.</li>
+        <li><strong>Pest and disease pressure follows the calendar too.</strong> Wetter months bring different pest risks than dry ones — timing your planting also times your pest exposure.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══ SEASONS (dark section, homepage style) ══ -->
+<section class="season-section">
+  <div class="wrap">
+    <div class="section-header">
+      <h2>Two seasons, one calendar</h2>
+      <p>Almost all seasonal planning in Sri Lanka is organised around Maha and Yala — the two cultivation seasons set by the island's monsoons.</p>
+    </div>
+    <div class="season-grid">
+      <div class="season maha">
+        <span class="s-badge">Main season</span>
+        <div class="s-name">Maha</div>
+        <div class="s-when">September/October → March</div>
+        <ul>
+          <li>Driven by the North-East monsoon, which brings the heaviest and most reliable rain of the year, especially to the dry zone.</li>
+          <li>The larger of the two seasons — most of the country's paddy land is cultivated in Maha.</li>
+          <li>Land preparation typically starts with the first rains in September/October; harvest runs January–March depending on variety.</li>
+          <li>Best season for paddy, maize, green gram, cowpea, and most highland field crops in the dry and intermediate zones.</li>
+        </ul>
+      </div>
+      <div class="season yala">
+        <span class="s-badge">Minor season</span>
+        <div class="s-name">Yala</div>
+        <div class="s-when">April/May → August</div>
+        <ul>
+          <li>Driven by the South-West monsoon, which favours the wet zone but brings far less rain to the dry zone.</li>
+          <li>The smaller season — dry-zone paddy in Yala usually depends on stored irrigation water rather than direct rainfall.</li>
+          <li>Land preparation from April/May; harvest runs July–August.</li>
+          <li>Good season for irrigated paddy, and — in the cooler upcountry — temperate vegetables like carrot, cabbage, and leeks.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA → CROP CALENDAR ══ -->
+<section class="cta-section">
+  <div class="advertise-cta">
+    <h3>See the detailed paddy schedule</h3>
+    <p>Pick your variety duration and sowing month, and get a week-by-week land preparation, fertilizer, and harvest schedule — plus pest alerts and field economics.</p>
+    <a href="paddy-crop-calendar-dashboard.html"><button class="btn-advertise">Open Crop Calendar →</button></a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <img src="logo.png" alt="FirmLink logo"/>
+        Firmlink
+      </div>
+      <p>Sri Lanka's premier business directory connecting customers with trusted local businesses.</p>
+      <div class="parent-company">A Nested company</div>
+      <div class="social-links">
+        <div class="social-link"><i class="fab fa-facebook-f"></i></div>
+        <div class="social-link"><i class="fab fa-twitter"></i></div>
+        <div class="social-link"><i class="fab fa-instagram"></i></div>
+        <div class="social-link"><i class="fab fa-linkedin-in"></i></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>For Businesses</h4>
+      <ul>
+        <li><a href="#">List Your Business</a></li>
+        <li><a href="#">Advertise with Us</a></li>
+        <li><a href="#">Business Dashboard</a></li>
+        <li><a href="#">Pricing Plans</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>For Users</h4>
+      <ul>
+        <li><a href="#">Browse Businesses</a></li>
+        <li><a href="agriculture-innovation.html">Agriculture Innovation</a></li>
+        <li><a href="paddy-crop-calendar-dashboard.html">Crop Calendar</a></li>
+        <li><a href="#">Help Centre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Info</h4>
+      <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Business Street, Colombo 03, Sri Lanka</span></div>
+      <div class="contact-item"><i class="fas fa-phone"></i><span>+94 11 234 5678</span></div>
+      <div class="contact-item"><i class="fas fa-envelope"></i><span>info@firmlink.lk</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Firmlink, a Nested company. All rights reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
